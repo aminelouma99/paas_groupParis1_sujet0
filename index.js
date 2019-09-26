@@ -16,7 +16,8 @@ client.on('connect', function() {
 client.on('error', function (err) {
     console.log('Something went wrong ' + err);
 });
-
+const {promisify} = require('util');
+const getAsync = promisify(client.get).bind(client);
 
 const server = new Hapi.Server(
   {
@@ -140,18 +141,15 @@ const server = new Hapi.Server(
       path: "/status",
       config: {
         handler: (req) => {
+          const field = "nbcall"
           const { payload } = req;
-          console.log('debug');
-          r = await client.get('nbcall', function (error, nbCall) {
-            if (error) {
-                console.log(error);
-                throw error;
+          return getAsync(field).then(function (nbCall) {
+            if (!nbCall) {
+              nbCall = "0";
             }
-            console.log('ok')
-            //client.set('nbcall', nbCall + 1, 
-            return {}; 
+            client.set(field, Number(nbCall) + 1);
+            return {nbCall: nbCall};
           });
-          return r;
         },
         description: "Create a message",
         notes: "create a message",
