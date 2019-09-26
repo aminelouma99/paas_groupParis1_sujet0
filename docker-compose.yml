@@ -7,12 +7,14 @@ services:
       - 3000:3000
     environment:
       POSTGRES_HOST: postgres:epitech@postgres:5432
+      REDIS_URL: redis://cache
       PORT: 3000
       
     depends_on:
       - postgres
     links:
       - postgres
+      - redis
 
   postgres:
     container_name: postgres
@@ -23,3 +25,10 @@ services:
     environment:
       POSTGRES_PASSWORD: epitech
       POSTGRES_DB: paas-project
+  redis:
+    image: redis
+    container_name: cache
+    environment:
+      REDIS_URL: redis://cache
+    expose:
+      - 6379
