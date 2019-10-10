@@ -33,13 +33,7 @@ const server = new Hapi.Server(
     );
   }
   const sequelize = new Sequelize(
-    `postgres://${process.env.POSTGRES_HOST}/${process.env.POSTGRES_DB || "paas-project"}`,
-    {
-      ssl: process.env.POSTGRES_SSL,
-      dialectOptions: {
-        ssl: process.env.POSTGRES_SSL,
-      }, 
-    }
+    `postgres://${process.env.POSTGRES_HOST}/${process.env.POSTGRES_DB}`
   );
   let retries = 5;
   
@@ -68,7 +62,7 @@ const server = new Hapi.Server(
     message: Sequelize.STRING
   });
 
-  await Messages.sync({ force: true });
+  await Messages.sync();
 
   await server.register([
     Inert,
