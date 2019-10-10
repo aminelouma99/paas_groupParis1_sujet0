@@ -4,8 +4,6 @@ services:
     container_name: api-paas-postgres
     restart: always
     build: .
-    expose:
-      - ${WEBSITE_PORT}
     depends_on:
       - postgres
       - redis
