@@ -1,6 +1,6 @@
 ## [Project 0] Module Plateforme as a Service & IA
 
-Cette infrastructure devra se compose des briques suivantes:
+Cette infrastructure se compose des briques suivantes:
 - un proxy nginx en tête 
 - une base de donnée sql postgresql
 - une base de donnée clé valeur (redis)
