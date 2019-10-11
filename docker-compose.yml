@@ -16,7 +16,7 @@ services:
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_DB: ${POSTGRES_DB}
-      REDIS_URL: ${REDIS_URL}
+      REDIS_URL: ${REDIS_HOST}
       PORT: ${WEBSITE_PORT}
 
   postgres:
