@@ -27,4 +27,6 @@ Cette infrastructure se compose des briques suivantes:
 
 ### Viewing
 
-* Go to swagger page - `localhost:3000/documentation`
+* Go to swagger page - `https://localhost/documentation`
+
+Note: You have to accept the certificate from the proxy.
