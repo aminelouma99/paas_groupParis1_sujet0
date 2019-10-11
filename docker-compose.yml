@@ -4,25 +4,31 @@ services:
     container_name: api-paas-postgres
     restart: always
     build: .
-    ports:
-      - ${PORT}:${PORT}
     depends_on:
       - postgres
       - redis
-    links:
-      - postgres
-      - redis
+    networks:
+      proxy:
+        aliases:
+          - website
+      sql_db:
+      inmemory_db:
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_DB: ${POSTGRES_DB}
       REDIS_URL: ${REDIS_URL}
-      PORT: ${PORT}
+      PORT: ${WEBSITE_PORT}
 
   postgres:
     container_name: postgres
     restart: always
     image: postgres
-    expose:
-      - 5432
+    networks:
+      sql_db:
+        aliases:
+          - postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -31,7 +37,33 @@ services:
     image: redis
     container_name: cache
     restart: always
+    networks:
+      inmemory_db:
+        aliases:
+          - redis
     environment:
-      REDIS_URL: redis://cache
-    expose:
-      - 6379
+      REDIS_URL: ${REDIS_HOST}
+
+
+  reverse_proxy:
+    image: nginx
+    depends_on:
+      - api-paas-postgres
+    ports:
+      - "443:443"
+    networks:
+      proxy:
+    volumes:
+      - ${RP_VOLUME}:/etc/nginx/conf.d
+
+
+volumes:
+  postgres-data:
+
+networks:
+  proxy:
+    driver: bridge
+  sql_db:
+    driver: bridge
+  inmemory_db:
+    driver: bridge
