@@ -91,27 +91,6 @@ const server = new Hapi.Server(
         tags: ["api"],
       },
     },
-    /*{
-      method: "GET",
-      path: "/status",
-      handler: async (request, h) => {
-        let {sub: redispath} = request.auth.credentials;
-        let {item: redisvalue} = request.payload;
-        let {redis} = request.server.app;
-    
-        try {
-    
-          let count = await redis.lpushAsync(redispath, redisvalue);
-    
-          return h.response({
-            count
-          }).code(201);
-    
-        } catch (e) {
-          return Boom.badImplementation(e);
-        }
-      }
-    },*/
     {
       method: "POST",
       path: "/message",
