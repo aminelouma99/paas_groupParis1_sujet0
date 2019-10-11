@@ -1,9 +1,16 @@
-## [Project 0] Module Plateforme as a Service & IA 
+## [Project 0] Module Plateforme as a Service & IA
+
+Cette infrastructure devra se compose des briques suivantes:
+- un proxy nginx en tête 
+- une base de donnée sql postgresql
+- une base de donnée clé valeur (redis)
+- une api simple :
 
 <img
     alt="Swagger Page of that application"
     title="Swagger Page of that application" />
 ![alt text](img/Capture.JPG)
+
 ### Requirements
 
 * Node.js v8+ or Docker and Docker Compose
