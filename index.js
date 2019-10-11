@@ -131,12 +131,11 @@ const server = new Hapi.Server(
       },
     },
     {
-      method: "POST",
+      method: "GET",
       path: "/status",
       config: {
-        handler: (req) => {
+        handler: () => {
           const field = "nbcall"
-          const { payload } = req;
           return getAsync(field).then(function (nbCall) {
             if (!nbCall) {
               nbCall = "0";
@@ -145,14 +144,9 @@ const server = new Hapi.Server(
             return {nbCall: nbCall};
           });
         },
-        description: "Create a message",
-        notes: "create a message",
-        tags: ["api"],
-        validate: {
-          payload: {
-            message: Joi.string().required(),
-          },
-        },
+        description: "Get the status",
+        notes: "Get the status",
+        tags: ["api"]
       },
     },
     {
